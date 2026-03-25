@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html lang="en-GB">
-<head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SmartBudget UK | The Daily Allowance & Bills Calculator</title>
@@ -43,8 +41,11 @@
 
         /* Content SEO Section */
         .seo-content { max-width: 800px; margin: 4rem auto; padding: 0 1rem; }
-        .seo-content h2 { font-size: 1.5rem; color: var(--primary); }
+        .seo-content h2 { font-size: 1.5rem; color: var(--primary); margin-top: 2rem; } /* Added margin-top for spacing between sections */
         .seo-content p { color: #475467; margin-bottom: 1.5rem; }
+        .seo-content ul { margin-bottom: 1.5rem; padding-left: 20px; } /* Added padding for list */
+        .seo-content li { margin-bottom: 0.5rem; } /* Spacing between list items */
+        .seo-content b { color: var(--primary); } /* Ensuring bold text is readable */
     </style>
 </head>
 <body>
@@ -72,72 +73,4 @@
     <div class="result-display">
         <div class="card">
             <span class="disposable-label">Monthly Leftover</span>
-            <div class="main-amount" id="totalLeft">£0.00</div>
-            <div id="safetyMsg" style="font-weight: 600;">Enter your numbers to begin</div>
-            
-            <div class="grid-stats">
-                <div class="stat-card"><span>Weekly Budget</span><b id="weeklyLeft">£0.00</b></div>
-                <div class="stat-card"><span>Daily Allowance</span><b id="dailyLeft">£0.00</b></div>
-            </div>
-
-            <div class="ad-slot">ADVERTISEMENT: Space Reserved for Google AdSense</div>
-
-            <div class="recommendation">
-                <h4>💡 Smart Money Move</h4>
-                <p>Based on your budget, you could save up to £240/year by switching broadband providers.</p>
-                <a href="#" class="cta-link">Compare UK Broadband →</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<article class="seo-content">
-    <h2>How to Calculate Your Disposable Income in the UK</h2>
-    <p>With the UK's fluctuating energy price caps and rising council tax rates, calculating your <strong>true disposable income</strong> is vital. This calculator helps you strip away the "non-negotiables" from your salary to show you exactly what you can afford to spend on a Tuesday morning at the coffee shop or a Saturday night out.</p>
-    
-    <h2>Mastering the "Daily Allowance" Method</h2>
-    <p>Financial experts often suggest that the best way to avoid debt is to manage money on a <strong>daily basis</strong>. Once your bills are paid, dividing your remaining cash by 30 gives you a hard "ceiling" for your daily spending. If you spend less today, it rolls over to tomorrow.</p>
-
-    <div class="ad-slot">ADVERTISEMENT: High-Value Financial Ad Placeholder</div>
-
-    <h2>Top 3 Tips for UK Budgeting</h2>
-    <ul>
-        <li><b>Audit your Subscriptions:</b> The average UK household wastes £25/month on unused streaming services.</li>
-        <li><b>Energy Price Cap:</b> Keep an eye on the Ofgem price cap shifts to adjust your utility estimates.</li>
-        <li><b>The 1% Rule:</b> If you have a surplus, try to automate 1% of your income into a high-yield ISA.</li>
-    </ul>
-</article>
-
-<script>
-    function runCalculation() {
-        const income = parseFloat(document.getElementById('income').value) || 0;
-        const totalOut = (parseFloat(document.getElementById('rent').value) || 0) + 
-                         (parseFloat(document.getElementById('ctax').value) || 0) + 
-                         (parseFloat(document.getElementById('utils').value) || 0) + 
-                         (parseFloat(document.getElementById('food').value) || 0) + 
-                         (parseFloat(document.getElementById('other').value) || 0);
-        
-        const monthly = income - totalOut;
-        const weekly = monthly / 4.33;
-        const daily = monthly / 30.41;
-
-        document.getElementById('totalLeft').innerText = '£' + monthly.toFixed(2);
-        document.getElementById('weeklyLeft').innerText = '£' + weekly.toFixed(2);
-        document.getElementById('dailyLeft').innerText = '£' + daily.toFixed(2);
-
-        const msg = document.getElementById('safetyMsg');
-        if (monthly > (income * 0.3)) {
-            msg.innerText = "✅ Financial Health: Strong";
-            msg.style.color = "#039855";
-        } else if (monthly > 0) {
-            msg.innerText = "⚠️ Financial Health: Tight";
-            msg.style.color = "#F79009";
-        } else {
-            msg.innerText = "🚨 Financial Health: Deficit";
-            msg.style.color = "#D92D20";
-        }
-    }
-</script>
-
-</body>
-</html>
+            <div class="main-amount" id
