@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartBudget UK | The Daily Allowance & Bills Calculator</title>
+    <style>
+        :root { --primary: #101828; --accent: #7F56D9; --success: #039855; --warning: #F79009; --error: #D92D20; --bg: #F9FAFB; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg); color: var(--primary); margin: 0; line-height: 1.5; }
+        .nav { background: white; padding: 1rem; border-bottom: 1px solid #EAECF0; text-align: center; font-weight: 700; font-size: 1.2rem; color: var(--accent); }
+        .hero { background: white; padding: 2rem 1rem; text-align: center; border-bottom: 1px solid #EAECF0; }
+        .hero h1 { font-size: 1.8rem; margin: 0; letter-spacing: -0.02em; }
+        .hero p { color: #667085; margin-top: 0.5rem; }
+        
+        .main-container { max-width: 1100px; margin: 2rem auto; padding: 0 1rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        @media (max-width: 850px) { .main-container { grid-template-columns: 1fr; } }
+
+        /* Card Styling */
+        .card { background: white; border: 1px solid #EAECF0; border-radius: 16px; padding: 2rem; shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+        .input-group { margin-bottom: 1.2rem; }
+        label { display: block; font-size: 0.875rem; font-weight: 500; color: #344054; margin-bottom: 0.5rem; }
+        input { width: 100%; padding: 0.75rem; border: 1px solid #D0D5DD; border-radius: 8px; font-size: 1rem; box-sizing: border-box; outline: none; transition: border 0.2s; }
+        input:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(127, 86, 217, 0.1); }
+        
+        button { width: 100%; background: var(--accent); color: white; padding: 1rem; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; margin-top: 1rem; transition: 0.3s; }
+        button:hover { background: #6941C6; }
+
+        /* Results Area */
+        .result-display { text-align: center; }
+        .disposable-label { font-size: 0.875rem; color: #667085; font-weight: 500; }
+        .main-amount { font-size: 3.5rem; font-weight: 700; color: var(--primary); margin: 0.5rem 0; }
+        .grid-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem; }
+        .stat-card { background: #F9FAFB; border: 1px solid #EAECF0; padding: 1rem; border-radius: 12px; }
+        .stat-card span { display: block; color: #667085; font-size: 0.75rem; text-transform: uppercase; font-weight: 600; }
+        .stat-card b { font-size: 1.25rem; color: var(--primary); }
+
+        /* Passive Income Areas */
+        .ad-slot { background: #f2f4f7; border: 1px dashed #98a2b3; border-radius: 8px; padding: 1rem; margin: 1.5rem 0; text-align: center; color: #475467; font-size: 0.75rem; }
+        .recommendation { background: #F4EBFF; border: 1px solid #E9D7FE; border-radius: 12px; padding: 1.2rem; margin-top: 1.5rem; }
+        .recommendation h4 { margin: 0 0 0.5rem 0; color: var(--accent); }
+        .recommendation p { margin: 0; font-size: 0.875rem; color: #6941C6; }
+        .cta-link { display: inline-block; margin-top: 0.8rem; font-weight: 700; text-decoration: none; color: var(--accent); border-bottom: 2px solid var(--accent); }
+
+        /* Content SEO Section */
+        .seo-content { max-width: 800px; margin: 4rem auto; padding: 0 1rem; }
+        .seo-content h2 { font-size: 1.5rem; color: var(--primary); }
+        .seo-content p { color: #475467; margin-bottom: 1.5rem; }
+    </style>
+</head>
+<body>
+
+<div class="nav">SmartBudget.uk</div>
+
+<div class="hero">
+    <h1>UK Cost of Living Calculator</h1>
+    <p>Calculate your daily allowance after tax, bills, and council tax.</p>
+</div>
+
+<div class="main-container">
+    <!-- Calculator -->
+    <div class="card">
+        <div class="input-group"><label>Monthly Take-Home Pay (£)</label><input type="number" id="income" placeholder="2500"></div>
+        <div class="input-group"><label>Rent or Mortgage (£)</label><input type="number" id="rent" placeholder="850"></div>
+        <div class="input-group"><label>Council Tax (£)</label><input type="number" id="ctax" placeholder="140"></div>
+        <div class="input-group"><label>Utilities & Broadband (£)</label><input type="number" id="utils" placeholder="210"></div>
+        <div class="input-group"><label>Groceries (£)</label><input type="number" id="food" placeholder="300"></div>
+        <div class="input-group"><label>Other (Transport, Gym, Subs) (£)</label><input type="number" id="other" placeholder="150"></div>
+        <button onclick="runCalculation()">Update Calculations</button>
+    </div>
+
+    <!-- Live Results & Ads -->
+    <div class="result-display">
+        <div class="card">
+            <span class="disposable-label">Monthly Leftover</span>
+            <div class="main-amount" id="totalLeft">£0.00</div>
+            <div id="safetyMsg" style="font-weight: 600;">Enter your numbers to begin</div>
+            
+            <div class="grid-stats">
+                <div class="stat-card"><span>Weekly Budget</span><b id="weeklyLeft">£0.00</b></div>
+                <div class="stat-card"><span>Daily Allowance</span><b id="dailyLeft">£0.00</b></div>
+            </div>
+
+            <div class="ad-slot">ADVERTISEMENT: Space Reserved for Google AdSense</div>
+
+            <div class="recommendation">
+                <h4>💡 Smart Money Move</h4>
+                <p>Based on your budget, you could save up to £240/year by switching broadband providers.</p>
+                <a href="#" class="cta-link">Compare UK Broadband →</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<article class="seo-content">
+    <h2>How to Calculate Your Disposable Income in the UK</h2>
+    <p>With the UK's fluctuating energy price caps and rising council tax rates, calculating your <strong>true disposable income</strong> is vital. This calculator helps you strip away the "non-negotiables" from your salary to show you exactly what you can afford to spend on a Tuesday morning at the coffee shop or a Saturday night out.</p>
+    
+    <h2>Mastering the "Daily Allowance" Method</h2>
+    <p>Financial experts often suggest that the best way to avoid debt is to manage money on a <strong>daily basis</strong>. Once your bills are paid, dividing your remaining cash by 30 gives you a hard "ceiling" for your daily spending. If you spend less today, it rolls over to tomorrow.</p>
+
+    <div class="ad-slot">ADVERTISEMENT: High-Value Financial Ad Placeholder</div>
+
+    <h2>Top 3 Tips for UK Budgeting</h2>
+    <ul>
+        <li><b>Audit your Subscriptions:</b> The average UK household wastes £25/month on unused streaming services.</li>
+        <li><b>Energy Price Cap:</b> Keep an eye on the Ofgem price cap shifts to adjust your utility estimates.</li>
+        <li><b>The 1% Rule:</b> If you have a surplus, try to automate 1% of your income into a high-yield ISA.</li>
+    </ul>
+</article>
+
+<script>
+    function runCalculation() {
+        const income = parseFloat(document.getElementById('income').value) || 0;
+        const totalOut = (parseFloat(document.getElementById('rent').value) || 0) + 
+                         (parseFloat(document.getElementById('ctax').value) || 0) + 
+                         (parseFloat(document.getElementById('utils').value) || 0) + 
+                         (parseFloat(document.getElementById('food').value) || 0) + 
+                         (parseFloat(document.getElementById('other').value) || 0);
+        
+        const monthly = income - totalOut;
+        const weekly = monthly / 4.33;
+        const daily = monthly / 30.41;
+
+        document.getElementById('totalLeft').innerText = '£' + monthly.toFixed(2);
+        document.getElementById('weeklyLeft').innerText = '£' + weekly.toFixed(2);
+        document.getElementById('dailyLeft').innerText = '£' + daily.toFixed(2);
+
+        const msg = document.getElementById('safetyMsg');
+        if (monthly > (income * 0.3)) {
+            msg.innerText = "✅ Financial Health: Strong";
+            msg.style.color = "#039855";
+        } else if (monthly > 0) {
+            msg.innerText = "⚠️ Financial Health: Tight";
+            msg.style.color = "#F79009";
+        } else {
+            msg.innerText = "🚨 Financial Health: Deficit";
+            msg.style.color = "#D92D20";
+        }
+    }
+</script>
+
+</body>
+</html>
