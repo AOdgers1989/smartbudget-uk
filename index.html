@@ -1,4 +1,6 @@
-
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SmartBudget UK | The Daily Allowance & Bills Calculator</title>
@@ -14,7 +16,7 @@
         @media (max-width: 850px) { .main-container { grid-template-columns: 1fr; } }
 
         /* Card Styling */
-        .card { background: white; border: 1px solid #EAECF0; border-radius: 16px; padding: 2rem; shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+        .card { background: white; border: 1px solid #EAECF0; border-radius: 16px; padding: 2rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); } /* Corrected 'shadow' to 'box-shadow' */
         .input-group { margin-bottom: 1.2rem; }
         label { display: block; font-size: 0.875rem; font-weight: 500; color: #344054; margin-bottom: 0.5rem; }
         input { width: 100%; padding: 0.75rem; border: 1px solid #D0D5DD; border-radius: 8px; font-size: 1rem; box-sizing: border-box; outline: none; transition: border 0.2s; }
@@ -73,4 +75,4 @@
     <div class="result-display">
         <div class="card">
             <span class="disposable-label">Monthly Leftover</span>
-            <div class="main-amount" id
+            <div class="main-amount" id="
